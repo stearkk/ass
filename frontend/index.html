@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Планер-Менеджер</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Юля и Ева AI Планер</h1>
+  
+  <input class='form' type="text" id="taskName" placeholder="Название задачи">
+  
+  <div class="form">
+    <input type="number" id="taskPriority" placeholder="task priority" step="1">
+    <input type="number" id="taskDuration" placeholder="Длительность (минут)" min="1" step="1">
+  </div>
+  
+  <p>
+    <input type="radio" value="habit" checked name="type"> habit
+    <input type="radio" value="once" name="type"> once
+  </p>
+
+  <div id="field-habit">
+    <p>
+      <input type="number" id="timesPer" placeholder="times per">
+      /
+      <input type="number" id="habitPeriodCountDays" hidden placeholder="количество дней">
+      <select id="period">
+        <option value="week">week</option>
+        <option value="day">day</option>
+        <option value="month">month</option>
+        <option value="year">year</option>
+        <option value="days">days</option>
+      </select>
+      till <input type="date" id="habitEndDate">
+    </p>
+    
+    <!-- Контейнер для добавления конкретных времен -->
+    <div id="exactTimesContainer">
+      <div class="exact-time-entry">
+        <input type="time" class="habitExactTime"> 
+        <select class="habitExactWeekDay">
+          <option>Monday</option>
+          <option>Tuesday</option>
+          <option>Wednesday</option>
+          <option>Thursday</option>
+          <option>Friday</option>
+          <option>Saturday</option>
+          <option>Sunday</option>
+        </select>
+        <input type="date" class="habitExactDate" hidden>
+        <button type="button" onclick="removeExactTime(this)">×</button>
+      </div>
+    </div>
+    <button type="button" onclick="addExactTime()">+ Добавить время</button>
+    
+    <p>
+      <input type="checkbox" value="mon">mon
+      <input type="checkbox" value="tue">tue
+      <input type="checkbox" value="wed">wed
+      <input type="checkbox" value="thu">thu
+      <input type="checkbox" value="fri">fri
+      <input type="checkbox" value="sat">sat
+      <input type="checkbox" value="sun">sun
+    </p>
+  </div>
+
+  <div id="field-once">
+    <p>exact time: <input type="time"> <input type="date"></p>
+    <p>deadline: <input type="date" placeholder="deadline"></p>
+  </div>
+
+  <button onclick="addTask()">Добавить задачу</button>
+
+  <ul id="taskList"></ul>
+
+  <script src="script.js"></script>
+  
+  <script>
+    const radios = document.querySelectorAll('input[name="type"]');
+    const habitBlock = document.getElementById('field-habit');
+    const onceBlock = document.getElementById('field-once');
+  
+    function updateVisibility() {
+      const value = document.querySelector('input[name="type"]:checked').value;
+      habitBlock.hidden = value !== 'habit';
+      onceBlock.hidden = value !== 'once';
+  
+      habitBlock.setAttribute('aria-hidden', (value !== 'habit').toString());
+      onceBlock.setAttribute('aria-hidden', (value !== 'once').toString());
+    }
+  
+    radios.forEach(r => r.addEventListener('change', updateVisibility));
+    updateVisibility();
+
+    const period = document.getElementById('period');
+    const countDays = document.getElementById('habitPeriodCountDays');
+    
+    function updateVisibility2() {
+      const entries = document.querySelectorAll('.exact-time-entry');
+      
+      entries.forEach(entry => {
+        const weekDayField = entry.querySelector('.habitExactWeekDay');
+        const dateField = entry.querySelector('.habitExactDate');
+        
+        if (period.value === 'day' || period.value === 'days'){
+          weekDayField.hidden = true;
+          dateField.hidden = true;
+        }
+        else if (period.value === 'week') {
+          weekDayField.hidden = false;
+          dateField.hidden = true;
+        }
+        else{
+          dateField.hidden = false;
+          weekDayField.hidden = true;
+        }
+      });
+    }
+
+    function updateVisibility3() {
+      if (period.value === 'days') {
+        countDays.hidden = false;
+      }
+      else {
+        countDays.hidden = true;
+      }
+    }
+
+    // Функции для управления конкретными временами
+    function addExactTime() {
+      const timesPer = parseInt(document.getElementById('timesPer').value) || 0;
+      const container = document.getElementById('exactTimesContainer');
+      const currentEntries = container.querySelectorAll('.exact-time-entry').length;
+      
+      if (currentEntries >= timesPer) {
+        alert('Нельзя добавить больше времен, чем указано в timesPer');
+        return;
+      }
+      
+      const newEntry = document.createElement('div');
+      newEntry.className = 'exact-time-entry';
+      newEntry.innerHTML = `
+        <input type="time" class="habitExactTime"> 
+        <select class="habitExactWeekDay">
+          <option>Monday</option>
+          <option>Tuesday</option>
+          <option>Wednesday</option>
+          <option>Thursday</option>
+          <option>Friday</option>
+          <option>Saturday</option>
+          <option>Sunday</option>
+        </select>
+        <input type="date" class="habitExactDate" hidden>
+        <button type="button" onclick="removeExactTime(this)">×</button>
+      `;
+      container.appendChild(newEntry);
+      updateVisibility2(); // Обновляем видимость для нового элемента
+    }
+
+    function removeExactTime(button) {
+      const entries = document.querySelectorAll('.exact-time-entry');
+      if (entries.length > 1) {
+        button.parentElement.remove();
+      }
+    }
+
+    // Добавляем проверку при изменении timesPer
+    document.getElementById('timesPer').addEventListener('input', function() {
+      const timesPer = parseInt(this.value) || 0;
+      const container = document.getElementById('exactTimesContainer');
+      const currentEntries = container.querySelectorAll('.exact-time-entry');
+      
+      // Удаляем лишние entries если timesPer уменьшили
+      if (currentEntries.length > timesPer) {
+        for (let i = currentEntries.length - 1; i >= timesPer; i--) {
+          if (i > 0) { // Оставляем хотя бы один entry
+            currentEntries[i].remove();
+          }
+        }
+      }
+    });
+    
+  </script>
+</body>
+</html>
