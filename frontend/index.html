@@ -12,7 +12,7 @@
   
   <div class="form">
     <input type="number" id="taskPriority" placeholder="task priority" step="1">
-    <input type="number" id="taskDuration" placeholder="Длительность (минут)" min="1" step="1">
+    <input type="number" id="taskDuration" placeholder="duration(?) (minutes)" min="1" step="1">
   </div>
   
   <p>
@@ -35,7 +35,7 @@
       till <input type="date" id="habitEndDate">
     </p>
     
-    <!-- Контейнер для добавления конкретных времен -->
+
     <div id="exactTimesContainer">
       <div class="exact-time-entry">
         <input type="time" class="habitExactTime"> 
@@ -52,7 +52,7 @@
         <button type="button" onclick="removeExactTime(this)">×</button>
       </div>
     </div>
-    <button type="button" onclick="addExactTime()">+ Добавить время</button>
+    <button type="button" onclick="addExactTime()">+ addd time</button>
     
     <p>
       <input type="checkbox" value="mon">mon
@@ -70,7 +70,7 @@
     <p>deadline: <input type="date" placeholder="deadline"></p>
   </div>
 
-  <button onclick="addTask()">Добавить задачу</button>
+  <button onclick="addTask()">add task</button>
 
   <ul id="taskList"></ul>
 
@@ -127,7 +127,7 @@
       }
     }
 
-    // Функции для управления конкретными временами
+
     function addExactTime() {
       const timesPer = parseInt(document.getElementById('timesPer').value) || 0;
       const container = document.getElementById('exactTimesContainer');
@@ -155,7 +155,7 @@
         <button type="button" onclick="removeExactTime(this)">×</button>
       `;
       container.appendChild(newEntry);
-      updateVisibility2(); // Обновляем видимость для нового элемента
+      updateVisibility2(); 
     }
 
     function removeExactTime(button) {
@@ -165,16 +165,15 @@
       }
     }
 
-    // Добавляем проверку при изменении timesPer
+
     document.getElementById('timesPer').addEventListener('input', function() {
       const timesPer = parseInt(this.value) || 0;
       const container = document.getElementById('exactTimesContainer');
       const currentEntries = container.querySelectorAll('.exact-time-entry');
       
-      // Удаляем лишние entries если timesPer уменьшили
       if (currentEntries.length > timesPer) {
         for (let i = currentEntries.length - 1; i >= timesPer; i--) {
-          if (i > 0) { // Оставляем хотя бы один entry
+          if (i > 0) { 
             currentEntries[i].remove();
           }
         }
