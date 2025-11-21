@@ -95,7 +95,7 @@ function addExactTime() {
     const currentEntries = container.querySelectorAll('.exact-time-entry').length;
     
     if (currentEntries >= timesPer && timesPer > 0) {
-        alert(`👿Максимум можно добавить ${timesPer} времен👹`);
+        alert(`👿 максимум можно добавить ${timesPer} времен👹`);
         return;
     }
     
@@ -104,13 +104,13 @@ function addExactTime() {
     newEntry.innerHTML = `
         <input type="time" class="habitExactTime">
         <select class="habitExactWeekDay">
-            <option value="mon">Понедельник</option>
-            <option value="tue">Вторник</option>
-            <option value="wed">Среда</option>
-            <option value="thu">Четверг</option>
-            <option value="fri">Пятница</option>
-            <option value="sat">Суббота</option>
-            <option value="sun">Воскресенье</option>
+            <option value="mon">Monday</option>
+            <option value="tue">Tuesday</option>
+            <option value="wed">Wednesday</option>
+            <option value="thu">Thursday</option>
+            <option value="fri">fridy</option>
+            <option value="sat">Saturaday</option>
+            <option value="sun">Sunday</option>
         </select>
         <input type="date" class="habitExactDate" hidden>
         <button type="button" onclick="removeExactTime(this)">×</button>
@@ -195,17 +195,17 @@ function collectSelectedDays() {
 
 function validateFormData(data) {
     if (!data.name) {
-        alert('Введите название задачи 🤬');
+        alert('enter task name 🤬');
         return false;
     }
     
     if (!data.priority || data.priority < 1) {
-        alert('Укажите приоритет (число от 1) 😱🤠');
+        alert('Enter period (1 to 10) 😱🤠');
         return false;
     }
     
     if (!data.duration || data.duration < 1) {
-        alert('Укажите длительность выполнения 🤡🥵');
+        alert('enter duration 🤡🥵');
         return false;
     }
     
@@ -216,7 +216,7 @@ function validateFormData(data) {
         }
         
         if (data.period === 'days' && !data.customDays) {
-            alert('Укажите количество дней для периода 👨🏾‍🤝‍👨🏻🍻');
+            alert('enter days count 👨🏾‍🤝‍👨🏻🍻');
             return false;
         }
     }
@@ -268,7 +268,7 @@ async function addTask() {
     
     const aiResult = await sendTasksToServer();
     if (aiResult) {
-        console.log('AI успешно распределил задачи');
+        console.log('AI succesfully make a schedule');
     }
 }
 
@@ -286,13 +286,13 @@ function displayTasks() {
         
         let taskInfo = '';
         if (task.type === 'habit') {
-            taskInfo = `🤮 ${task.name} | ${task.timesPer} раз в ${task.period} | ${task.duration} мин | приоритет ${task.priority}`;
+            taskInfo = `🤮 ${task.name} | ${task.timesPer}times per ${task.period} | ${task.duration} mins | priority ${task.priority}`;
             if (task.exactTimes.length > 0) {
-                taskInfo += ` | ${task.exactTimes.length} фикс. времени`;
+                taskInfo += ` | ${task.exactTimes.length} fixed time`;
             }
         } else {
-            const timeInfo = task.exactTime ? `${task.exactDate} в ${task.exactTime}` : 'без точного времени';
-            taskInfo = `💩 ${task.name} | ${timeInfo} | ${task.duration} мин | приоритет ${task.priority}`;
+            const timeInfo = task.exactTime ? `${task.exactDate} в ${task.exactTime}` : 'without exact time';
+            taskInfo = `💩 ${task.name} | ${timeInfo} | ${task.duration} mins | priority ${task.priority}`;
         }
         
         li.textContent = taskInfo;
