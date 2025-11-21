@@ -24,18 +24,18 @@ class TaskBase(BaseModel):
 
 class TaskOnce(TaskBase):
     type: TaskType = TaskType.ONCE
-    exact_time: str | None = None  # "HH:MM"
-    exact_date: str | None = None  # "YYYY-MM-DD"
-    deadline: str | None = None    # "YYYY-MM-DD"
+    exact_time: str | None = None 
+    exact_date: str | None = None 
+    deadline: str | None = None   
 
 class TaskHabit(TaskBase):
     type: TaskType = TaskType.HABIT
-    times_per: int  # сколько раз выполнять за период
-    period: PeriodType  # период повторения
-    end_date: str | None = None  # "YYYY-MM-DD" - до какой даты
-    custom_days: int | None = None  # для period=CUSTOM_DAYS
-    exact_times: List[dict] = []  # список {time: "HH:MM", weekday: "mon", date: "YYYY-MM-DD"}
-    selected_days: List[str] = []  # ["mon", "tue", ...]
+    times_per: int  #count per period
+    period: PeriodType  
+    end_date: str | None = None 
+    custom_days: int | None = None  
+    exact_times: List[dict] = [] 
+    selected_days: List[str] = []  
 
 class TaskList(BaseModel):
     tasks: List[Union[TaskOnce, TaskHabit]]
@@ -63,3 +63,7 @@ def analyze_tasks(task_list: TaskList):
 =======
     return {"schedule" : schedule}
 >>>>>>> 60280d4b2b9562183a4d46424d7dae5c97790c7e
+
+
+
+# алина дурааааааааааа
