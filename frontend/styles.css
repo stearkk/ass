@@ -57,7 +57,6 @@ select {
     justify-content: flex-start;
     place-items: center;
     width: 25%;
-    max-width: 350px;
     gap: 20px;
     position: absolute;
     border: 1px solid rgb(230, 80, 25);
