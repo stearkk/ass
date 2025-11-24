@@ -60,7 +60,15 @@ def analyze_tasks(task_list: TaskList):
     schedule = predict_schedule(task_list.tasks)
     return {"schedule" : schedule}
     return {"schedule" : schedule}
+<<<<<<< HEAD
 
 
 
 # алина дурааааааааааа
+=======
+>>>>>>> 60280d4b2b9562183a4d46424d7dae5c97790c7e
+
+
+
+# алина дурааааааааааа
+>>>>>>> bdbfa183ab9a0c291638e5dfc069deb3092f0645
