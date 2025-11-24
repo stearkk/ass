@@ -183,21 +183,18 @@ function changeToEvening(){
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Объявляем переменные внутри обработчика
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     let currentWeekStart = new Date();
 
     document.getElementById('current_date').textContent = `${currentWeekStart.getDate()}:${currentWeekStart.getMonth()}:${currentWeekStart.getFullYear()}`;
     document.getElementById('current_time').textContent = `${currentWeekStart.getHours()}:${currentWeekStart.getMinutes()}`;
 
-    // Функция для получения понедельника текущей недели
     function getMonday(date) {
         const day = date.getDay();
         const diff = date.getDate() - day + (day === 0 ? -6 : 1);
         return new Date(date.setDate(diff));
     }
 
-    // Функция для генерации дат недели
     function generateWeekDates() {
         const monday = getMonday(new Date(currentWeekStart));
         const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
@@ -236,7 +233,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateWeekRange();
     }
 
-    // Функция для обновления диапазона недели
     function updateWeekRange() {
         const monday = getMonday(new Date(currentWeekStart));
         const sunday = new Date(monday);
@@ -253,7 +249,6 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(`Неделя: ${monday.getDate()}.${monday.getMonth()+1} - ${sunday.getDate()}.${sunday.getMonth()+1}${weekInfo}`);
     }
 
-    // Функции для переключения недель
     function prevWeek() {
         currentWeekStart.setDate(currentWeekStart.getDate() - 7);
         generateWeekDates();
@@ -264,7 +259,6 @@ document.addEventListener('DOMContentLoaded', function() {
         generateWeekDates();
     }
 
-    // Функция для выбора даты
     function selectDate(dateElement) {
         document.querySelectorAll('.date-btn').forEach(btn => {
             btn.classList.remove('choosed');
@@ -274,19 +268,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const selectedDate = dateElement.getAttribute('data-date');
         console.log('Выбрана дата:', selectedDate);
-        // Здесь можно фильтровать задачи по выбранной дате
         displayTasks(selectedDate);
     }
 
-    // Функция для перехода к текущей неделе
     function goToCurrentWeek() {
         currentWeekStart = new Date();
         generateWeekDates();
     }
 
-    // === ФУНКЦИИ ДЛЯ РАБОТЫ С ЗАДАЧАМИ ===
 
-    // Функция для добавления задачи
     function addTask() {
         const taskName = document.getElementById('taskName').value;
         const taskDuration = document.getElementById('taskDuration').value;
@@ -297,11 +287,9 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
                 
-        // Определяем тип задачи
         const isRegular = document.getElementById('type_btn_regular').classList.contains('choosed_type_btn');
         const type = isRegular ? 'regular' : 'once';
         const taskType = document.getElementById('task_type').value
-        // Создаем объект задачи
         const task = {
             id: Date.now(),
             title: taskName,
@@ -312,30 +300,22 @@ document.addEventListener('DOMContentLoaded', function() {
             taskPriority: taskPriority
         };
                 
-        // Добавляем задачу в массив
         tasks.push(task);
                 
-        // Сохраняем в localStorage
         localStorage.setItem('tasks', JSON.stringify(tasks));
                 
-        // Обновляем отображение
         displayTasks();
                 
-        // Очищаем поля ввода
         document.getElementById('taskName').value = '';
         document.getElementById('taskDuration').value = '';
     }
 
-    // Функция для отображения задач (с фильтрацией по дате)
     function displayTasks(selectedDate = null) {
         const tasksField = document.getElementById('tasks_field');
                 
         let filteredTasks = tasks;
         
-        // Если выбрана конкретная дата, можно добавить фильтрацию
         if (selectedDate) {
-            // Здесь можно добавить логику фильтрации по дате
-            // Например, если у задач есть поле date
             console.log('Фильтруем задачи по дате:', selectedDate);
         }
                 
@@ -345,7 +325,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
                 
         tasksField.innerHTML = filteredTasks.map(task => {
-        // Определяем цвет в зависимости от типа задачи
         let color;
         switch(task.taskType) {
             case 'General':
@@ -365,7 +344,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (task.taskPriority === 'high') color = '#86843B';
                 break;
             default:
-                color = '#e65019'; // цвет по умолчанию
+                color = '#e65019'; 
         }
         
         return `
@@ -381,14 +360,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }).join('');
     }
 
-    // Функция для удаления задачи
     function deleteTask(id) {
         tasks = tasks.filter(task => task.id !== id);
         localStorage.setItem('tasks', JSON.stringify(tasks));
         displayTasks();
     }
 
-    // Функция для переключения статуса задачи
     function toggleTask(id) {
         tasks = tasks.map(task => {
             if (task.id === id) {
@@ -400,23 +377,18 @@ document.addEventListener('DOMContentLoaded', function() {
         displayTasks();
     }
 
-    // === ИНИЦИАЛИЗАЦИЯ ===
 
-    // Инициализация переключателя дат
     generateWeekDates();
     
-    // Навешиваем обработчики для переключателя недель
     document.getElementById('prevWeek').addEventListener('click', prevWeek);
     document.getElementById('nextWeek').addEventListener('click', nextWeek);
     
-    // Обработчики для кнопок дат
     document.querySelectorAll('.date-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             selectDate(this);
         });
     });
     
-    // Обработчики для клавиатуры
     document.addEventListener('keydown', function(event) {
         if (event.key === 'ArrowLeft') {
             prevWeek();
@@ -425,10 +397,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Инициализация отображения задач
     displayTasks();
 
-    // Делаем функции глобальными, чтобы они работали в onclick
     window.addTask = addTask;
     window.deleteTask = deleteTask;
     window.toggleTask = toggleTask;
