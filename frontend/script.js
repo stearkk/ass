@@ -1,326 +1,438 @@
-let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+function changeToRegular(){
+    let regular_btn = document.getElementById('type_btn_regular')
+    let once_btn = document.getElementById('type_btn_once')
+    let regular_settings = document.getElementById('regular_settings')
+    let once_settings = document.getElementById('once_settings')
+    
+    regular_btn.className = 'choosed_type_btn'
+    once_btn.className = 'type_btn'
+    
+    if (regular_settings.style.display === 'flex') {
+        regular_settings.style.display = 'none'
+        document.getElementById('day_interval_field').style.display = 'none'
+    } else {
+        regular_settings.style.display = 'flex'
+        document.getElementById('day_interval_field').style.display = 'flex'
+    }
+    once_settings.style.display = 'none'
+}
+
+function changeToOnce(){
+    let regular_btn = document.getElementById('type_btn_regular')
+    let once_btn = document.getElementById('type_btn_once')
+    let regular_settings = document.getElementById('regular_settings')
+    let once_settings = document.getElementById('once_settings')
+    
+    regular_btn.className = 'type_btn'
+    once_btn.className = 'choosed_type_btn'
+    
+    if (once_settings.style.display === 'flex') {
+        once_settings.style.display = 'none'
+        document.getElementById('day_interval_field').style.display = 'none'
+    } else {
+        once_settings.style.display = 'flex'
+        document.getElementById('day_interval_field').style.display = 'flex'
+    }
+    regular_settings.style.display = 'none'
+}
+let taskPriority = 'medium'
+function changeToLow() {
+    taskPriority = 'low'
+
+    let low = document.getElementById('priority_btn_low')
+    let medium = document.getElementById('priority_btn_medium')
+    let hight = document.getElementById('priority_btn_high')
+    
+    low.className = 'choosed_priority_btn'
+    medium.className = 'priority_btn'
+    hight.className = 'priority_btn'
+}
+function changeToMedium() {
+    taskPriority = 'medium'
+    let low = document.getElementById('priority_btn_low')
+    let medium = document.getElementById('priority_btn_medium')
+    let hight = document.getElementById('priority_btn_high')
+    
+    medium.className = 'choosed_priority_btn'
+    low.className = 'priority_btn'
+    hight.className = 'priority_btn'
+    
+}
+function changeToHigh() {
+    taskPriority = 'high'
+    let low = document.getElementById('priority_btn_low')
+    let medium = document.getElementById('priority_btn_medium')
+    let high = document.getElementById('priority_btn_high')
+    
+    high.className = 'choosed_priority_btn'
+    low.className = 'priority_btn'
+    medium.className = 'priority_btn'
+}
+
+function changeToSpecial(){
+    let specials = document.getElementById('special_days_field')
+    let week = document.getElementById('per_week_field')
+    let month = document.getElementById('per_month_field')
+    let year = document.getElementById('per_year_field')
+    let btn = document.getElementById('choose_special')
+
+    btn.style.backgroundColor = 'rgb(230, 80, 25)'
+    document.getElementById('choose_week').style.backgroundColor = 'white'
+    document.getElementById('choose_year').style.backgroundColor = 'white'
+    document.getElementById('choose_month').style.backgroundColor = 'white'
+    
+    specials.style.display = 'flex'
+    week.style.display = 'none'
+    month.style.display = 'none'
+    year.style.display = 'none'
+}
+function changeToPerWeek(){
+    let specials = document.getElementById('special_days_field')
+    let week = document.getElementById('per_week_field')
+    let month = document.getElementById('per_month_field')
+    let year = document.getElementById('per_year_field')
+    let btn = document.getElementById('choose_week')
+    
+    btn.style.backgroundColor = 'rgb(230, 80, 25)'
+    document.getElementById('choose_special').style.backgroundColor = 'white'
+    document.getElementById('choose_year').style.backgroundColor = 'white'
+    document.getElementById('choose_month').style.backgroundColor = 'white'
+    
+    week.style.display = 'flex'
+    specials.style.display = 'none'
+    month.style.display = 'none'
+    year.style.display = 'none'
+}
+function changeToPerMonth(){
+    let specials = document.getElementById('special_days_field')
+    let week = document.getElementById('per_week_field')
+    let month = document.getElementById('per_month_field')
+    let year = document.getElementById('per_year_field')
+    let btn = document.getElementById('choose_month')
+    
+    btn.style.backgroundColor = 'rgb(230, 80, 25)'
+    document.getElementById('choose_week').style.backgroundColor = 'white'
+    document.getElementById('choose_year').style.backgroundColor = 'white'
+    document.getElementById('choose_special').style.backgroundColor = 'white'
+
+    month.style.display = 'flex'
+    week.style.display = 'none'
+    specials.style.display = 'none'
+    year.style.display = 'none'
+}
+function changeToPerYear(){
+    let year = document.getElementById('special_days_field')
+    let week = document.getElementById('per_week_field')
+    let month = document.getElementById('per_month_field')
+    let specials = document.getElementById('per_year_field')
+    let btn = document.getElementById('choose_year')
+    
+    btn.style.backgroundColor = 'rgb(230, 80, 25)'
+    document.getElementById('choose_week').style.backgroundColor = 'white'
+    document.getElementById('choose_special').style.backgroundColor = 'white'
+    document.getElementById('choose_month').style.backgroundColor = 'white'
+
+    specials.style.display = 'flex'
+    week.style.display = 'none'
+    month.style.display = 'none'
+    year.style.display = 'none'
+}
+
+function changeToAnytime(){
+    let anytime = document.getElementById('day_interval_anytime')
+    let morning = document.getElementById('day_interval_morning')
+    let afternoon = document.getElementById('day_interval_afternoon')
+    let evening = document.getElementById('day_interval_evening')
+
+    anytime.style.backgroundColor = 'rgb(230, 80, 25)'
+    morning.style.backgroundColor = 'white'
+    afternoon.style.backgroundColor = 'white'
+    evening.style.backgroundColor = 'white'
+}
+function changeToMorning(){
+
+    let anytime = document.getElementById('day_interval_anytime')
+    let morning = document.getElementById('day_interval_morning')
+    let afternoon = document.getElementById('day_interval_afternoon')
+    let evening = document.getElementById('day_interval_evening')
+
+    morning.style.backgroundColor = 'rgb(230, 80, 25)'
+    anytime.style.backgroundColor = 'white'
+}
+function changeToAfternoon(){
+    let anytime = document.getElementById('day_interval_anytime')
+    let morning = document.getElementById('day_interval_morning')
+    let afternoon = document.getElementById('day_interval_afternoon')
+    let evening = document.getElementById('day_interval_evening')
+
+    afternoon.style.backgroundColor = 'rgb(230, 80, 25)'
+    anytime.style.backgroundColor = 'white'
+}
+function changeToEvening(){
+    let anytime = document.getElementById('day_interval_anytime')
+    let morning = document.getElementById('day_interval_morning')
+    let afternoon = document.getElementById('day_interval_afternoon')
+    let evening = document.getElementById('day_interval_evening')
+
+    evening.style.backgroundColor = 'rgb(230, 80, 25)'
+    anytime.style.backgroundColor = 'white'
+}
+
+
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
-    checkServer();
+    // Объявляем переменные внутри обработчика
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    let currentWeekStart = new Date();
+
+    document.getElementById('current_date').textContent = `${currentWeekStart.getDate()}:${currentWeekStart.getMonth()}:${currentWeekStart.getFullYear()}`;
+    document.getElementById('current_time').textContent = `${currentWeekStart.getHours()}:${currentWeekStart.getMinutes()}`;
+
+    // Функция для получения понедельника текущей недели
+    function getMonday(date) {
+        const day = date.getDay();
+        const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+        return new Date(date.setDate(diff));
+    }
+
+    // Функция для генерации дат недели
+    function generateWeekDates() {
+        const monday = getMonday(new Date(currentWeekStart));
+        const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+        const today = new Date();
+        
+        const dateButtons = document.querySelectorAll('.date-btn');
+        const dayLabels = document.querySelectorAll('#day_switch_field p');
+        
+        days.forEach((day, index) => {
+            const date = new Date(monday);
+            date.setDate(monday.getDate() + index);
+            
+            dateButtons[index].textContent = date.getDate();
+            dateButtons[index].setAttribute('data-date', date.toISOString().split('T')[0]);
+            
+            dayLabels[index].textContent = day;
+            
+            dateButtons[index].classList.remove('choosed', 'today');
+            
+            if (date.toDateString() === today.toDateString()) {
+                dateButtons[index].classList.add('today');
+            }
+            
+            if (date.toDateString() === today.toDateString()) {
+                dateButtons[index].classList.add('choosed');
+            }
+        });
+        
+        const hasToday = Array.from(dateButtons).some(btn => 
+            btn.classList.contains('today')
+        );
+        if (!hasToday && dateButtons[0]) {
+            dateButtons[0].classList.add('choosed');
+        }
+        
+        updateWeekRange();
+    }
+
+    // Функция для обновления диапазона недели
+    function updateWeekRange() {
+        const monday = getMonday(new Date(currentWeekStart));
+        const sunday = new Date(monday);
+        sunday.setDate(monday.getDate() + 6);
+        
+        const today = new Date();
+        const currentWeekMonday = getMonday(new Date(today));
+        
+        let weekInfo = '';
+        if (monday.toDateString() === currentWeekMonday.toDateString()) {
+            weekInfo = ' (Текущая неделя)';
+        }
+        
+        console.log(`Неделя: ${monday.getDate()}.${monday.getMonth()+1} - ${sunday.getDate()}.${sunday.getMonth()+1}${weekInfo}`);
+    }
+
+    // Функции для переключения недель
+    function prevWeek() {
+        currentWeekStart.setDate(currentWeekStart.getDate() - 7);
+        generateWeekDates();
+    }
+
+    function nextWeek() {
+        currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+        generateWeekDates();
+    }
+
+    // Функция для выбора даты
+    function selectDate(dateElement) {
+        document.querySelectorAll('.date-btn').forEach(btn => {
+            btn.classList.remove('choosed');
+        });
+        
+        dateElement.classList.add('choosed');
+        
+        const selectedDate = dateElement.getAttribute('data-date');
+        console.log('Выбрана дата:', selectedDate);
+        // Здесь можно фильтровать задачи по выбранной дате
+        displayTasks(selectedDate);
+    }
+
+    // Функция для перехода к текущей неделе
+    function goToCurrentWeek() {
+        currentWeekStart = new Date();
+        generateWeekDates();
+    }
+
+    // === ФУНКЦИИ ДЛЯ РАБОТЫ С ЗАДАЧАМИ ===
+
+    // Функция для добавления задачи
+    function addTask() {
+        const taskName = document.getElementById('taskName').value;
+        const taskDuration = document.getElementById('taskDuration').value;
+        const TaskType = document.getElementById('task_type').value
+                
+        if (!taskName) {
+            alert('Введите название задачи');
+            return;
+        }
+                
+        // Определяем тип задачи
+        const isRegular = document.getElementById('type_btn_regular').classList.contains('choosed_type_btn');
+        const type = isRegular ? 'regular' : 'once';
+        const taskType = document.getElementById('task_type').value
+        // Создаем объект задачи
+        const task = {
+            id: Date.now(),
+            title: taskName,
+            duration: taskDuration | '-',
+            type: type,
+            createdAt: new Date().toISOString(),
+            taskType: taskType,
+            taskPriority: taskPriority
+        };
+                
+        // Добавляем задачу в массив
+        tasks.push(task);
+                
+        // Сохраняем в localStorage
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+                
+        // Обновляем отображение
+        displayTasks();
+                
+        // Очищаем поля ввода
+        document.getElementById('taskName').value = '';
+        document.getElementById('taskDuration').value = '';
+    }
+
+    // Функция для отображения задач (с фильтрацией по дате)
+    function displayTasks(selectedDate = null) {
+        const tasksField = document.getElementById('tasks_field');
+                
+        let filteredTasks = tasks;
+        
+        // Если выбрана конкретная дата, можно добавить фильтрацию
+        if (selectedDate) {
+            // Здесь можно добавить логику фильтрации по дате
+            // Например, если у задач есть поле date
+            console.log('Фильтруем задачи по дате:', selectedDate);
+        }
+                
+        if (filteredTasks.length === 0) {
+            tasksField.innerHTML = '<p>there aren\'t any tasks yet</p>';
+            return;
+        }
+                
+        tasksField.innerHTML = filteredTasks.map(task => {
+        // Определяем цвет в зависимости от типа задачи
+        let color;
+        switch(task.taskType) {
+            case 'General':
+                color = '#D38562'; 
+                if (task.taskPriority === 'high') color = '#CE6539';
+                break;
+            case 'Work':
+                color = '#CF9691'; // бордовый
+                if (task.taskPriority === 'high') color = '#976c68ff';
+                break;
+            case 'Study':
+                color = '#B3B9DD'; // желтый
+                if (task.taskPriority === 'high') color = '#9CA6D8';
+                break;
+            case 'Sport':
+                color = '#B1B262'; // оранжевый
+                if (task.taskPriority === 'high') color = '#86843B';
+                break;
+            default:
+                color = '#e65019'; // цвет по умолчанию
+        }
+        
+        return `
+            <div class="task-item" style="height: ${task.duration * 1.5}px; min-height: 60px; border: 2px solid ${color}; border-radius: 8px; padding: 10px; margin: 4px 0; background: ${color};">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="direction: column;"><h3 style="margin: 0;">${task.title}</h3>
+                    <p>${task.duration} mins</p></div>
+                    <button onclick="deleteTask(${task.id})" style="background: ${color}; color: white; border: none; border-radius: 50%; width: 25px; height: 25px; cursor: pointer;">×</button>
+                </div>
+
+            </div>
+        `;
+    }).join('');
+    }
+
+    // Функция для удаления задачи
+    function deleteTask(id) {
+        tasks = tasks.filter(task => task.id !== id);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        displayTasks();
+    }
+
+    // Функция для переключения статуса задачи
+    function toggleTask(id) {
+        tasks = tasks.map(task => {
+            if (task.id === id) {
+                return { ...task, completed: !task.completed };
+            }
+            return task;
+        });
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        displayTasks();
+    }
+
+    // === ИНИЦИАЛИЗАЦИЯ ===
+
+    // Инициализация переключателя дат
+    generateWeekDates();
+    
+    // Навешиваем обработчики для переключателя недель
+    document.getElementById('prevWeek').addEventListener('click', prevWeek);
+    document.getElementById('nextWeek').addEventListener('click', nextWeek);
+    
+    // Обработчики для кнопок дат
+    document.querySelectorAll('.date-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            selectDate(this);
+        });
+    });
+    
+    // Обработчики для клавиатуры
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'ArrowLeft') {
+            prevWeek();
+        } else if (event.key === 'ArrowRight') {
+            nextWeek();
+        }
+    });
+
+    // Инициализация отображения задач
     displayTasks();
-    setupEventListeners();
+
+    // Делаем функции глобальными, чтобы они работали в onclick
+    window.addTask = addTask;
+    window.deleteTask = deleteTask;
+    window.toggleTask = toggleTask;
+    window.goToCurrentWeek = goToCurrentWeek;
 });
 
 
-function setupEventListeners() {
-
-    document.querySelectorAll('input[name="type"]').forEach(radio => {
-        radio.addEventListener('change', updateTaskTypeVisibility);
-    });
-    
-
-    document.getElementById('period').addEventListener('change', updateHabitFieldsVisibility);
-    document.getElementById('timesPer').addEventListener('input', updateExactTimesLimit);
-    
-
-    updateTaskTypeVisibility();
-    updateHabitFieldsVisibility();
-}
-
-
-async function checkServer() {
-    try {
-        const res = await fetch("http://127.0.0.1:8000/");
-        if (res.ok) {
-            console.log("Server is connected");
-        } else {
-            console.warn("Server responded with error");
-        }
-    } catch (error) {
-        console.error("No connection to the server");
-    }
-}
-
-
-async function sendTasksToServer() {
-    try {
-        const response = await fetch("http://127.0.0.1:8000/analyze", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ tasks }),
-        });
-
-        const data = await response.json();
-        console.log(" AI Schedule:", data.schedule);
-        return data;
-    } catch (error) {
-        console.error("Error sending tasks to AI:", error);
-        return null;
-    }
-}
-
-function updateTaskTypeVisibility() {
-    const type = document.querySelector('input[name="type"]:checked').value;
-    const habitBlock = document.getElementById('field-habit');
-    const onceBlock = document.getElementById('field-once');
-    
-    habitBlock.hidden = type !== 'habit';
-    onceBlock.hidden = type !== 'once';
-}
-
-function updateHabitFieldsVisibility() {
-    const period = document.getElementById('period').value;
-    const countDaysField = document.getElementById('habitPeriodCountDays');
-    const entries = document.querySelectorAll('.exact-time-entry');
-    
-    countDaysField.hidden = period !== 'days';
-    
-    entries.forEach(entry => {
-        const weekDayField = entry.querySelector('.habitExactWeekDay');
-        const dateField = entry.querySelector('.habitExactDate');
-        
-        if (period === 'day' || period === 'days') {
-            weekDayField.hidden = true;
-            dateField.hidden = true;
-        } else if (period === 'week') {
-            weekDayField.hidden = false;
-            dateField.hidden = true;
-        } else { 
-            dateField.hidden = false;
-            weekDayField.hidden = true;
-        }
-    });
-}
-
-function addExactTime() {
-    const timesPer = parseInt(document.getElementById('timesPer').value) || 0;
-    const container = document.getElementById('exactTimesContainer');
-    const currentEntries = container.querySelectorAll('.exact-time-entry').length;
-    
-    if (currentEntries >= timesPer && timesPer > 0) {
-        alert(`👿Максимум можно добавить ${timesPer} времен👹`);
-        return;
-    }
-    
-    const newEntry = document.createElement('div');
-    newEntry.className = 'exact-time-entry';
-    newEntry.innerHTML = `
-        <input type="time" class="habitExactTime">
-        <select class="habitExactWeekDay">
-            <option value="mon">Понедельник</option>
-            <option value="tue">Вторник</option>
-            <option value="wed">Среда</option>
-            <option value="thu">Четверг</option>
-            <option value="fri">Пятница</option>
-            <option value="sat">Суббота</option>
-            <option value="sun">Воскресенье</option>
-        </select>
-        <input type="date" class="habitExactDate" hidden>
-        <button type="button" onclick="removeExactTime(this)">×</button>
-    `;
-    container.appendChild(newEntry);
-    updateHabitFieldsVisibility();
-}
-
-function removeExactTime(button) {
-    const entries = document.querySelectorAll('.exact-time-entry');
-    if (entries.length > 1) {
-        button.parentElement.remove();
-    }
-}
-
-function updateExactTimesLimit() {
-    const timesPer = parseInt(document.getElementById('timesPer').value) || 0;
-    const container = document.getElementById('exactTimesContainer');
-    const entries = container.querySelectorAll('.exact-time-entry');
-    
-    if (entries.length > timesPer) {
-        for (let i = entries.length - 1; i >= timesPer; i--) {
-            if (i > 0) {
-                entries[i].remove();
-            }
-        }
-    }
-}
-
-function collectFormData() {
-    const type = document.querySelector('input[name="type"]:checked').value;
-    const baseData = {
-        name: document.getElementById('taskName').value.trim(),
-        priority: parseInt(document.getElementById('taskPriority').value),
-        duration: parseInt(document.getElementById('taskDuration').value),
-        type: type
-    };
-    
-    if (type === 'habit') {
-        return {
-            ...baseData,
-            timesPer: parseInt(document.getElementById('timesPer').value),
-            period: document.getElementById('period').value,
-            endDate: document.getElementById('habitEndDate').value,
-            customDays: document.getElementById('habitPeriodCountDays').value || null,
-            exactTimes: collectExactTimes(),
-            selectedDays: collectSelectedDays()
-        };
-    } else {
-        return {
-            ...baseData,
-            exactTime: document.querySelector('#field-once input[type="time"]').value,
-            exactDate: document.querySelector('#field-once input[type="date"]').value,
-            deadline: document.querySelector('#field-once input[placeholder="deadline"]').value
-        };
-    }
-}
-
-function collectExactTimes() {
-    const exactTimes = [];
-    document.querySelectorAll('.exact-time-entry').forEach(entry => {
-        const time = entry.querySelector('.habitExactTime').value;
-        const weekDay = entry.querySelector('.habitExactWeekDay').value;
-        const date = entry.querySelector('.habitExactDate').value;
-        
-        if (time) {
-            exactTimes.push({ time, weekDay, date });
-        }
-    });
-    return exactTimes;
-}
-
-function collectSelectedDays() {
-    const selectedDays = [];
-    document.querySelectorAll('#field-habit input[type="checkbox"]').forEach(checkbox => {
-        if (checkbox.checked) {
-            selectedDays.push(checkbox.value);
-        }
-    });
-    return selectedDays;
-}
-
-function validateFormData(data) {
-    if (!data.name) {
-        alert('Введите название задачи 🤬');
-        return false;
-    }
-    
-    if (!data.priority || data.priority < 1) {
-        alert('Укажите приоритет (число от 1) 😱🤠');
-        return false;
-    }
-    
-    if (!data.duration || data.duration < 1) {
-        alert('Укажите длительность выполнения 🤡🥵');
-        return false;
-    }
-    
-    if (data.type === 'habit') {
-        if (!data.timesPer || data.timesPer < 1) {
-            alert('Укажите количество повторений привычки ☠');
-            return false;
-        }
-        
-        if (data.period === 'days' && !data.customDays) {
-            alert('Укажите количество дней для периода 👨🏾‍🤝‍👨🏻🍻');
-            return false;
-        }
-    }
-    
-    return true;
-}
-
-function clearForm() {
-    document.getElementById('taskName').value = '';
-    document.getElementById('taskPriority').value = '';
-    document.getElementById('taskDuration').value = '';
-    
-    document.getElementById('timesPer').value = '';
-    document.getElementById('habitEndDate').value = '';
-    document.getElementById('habitPeriodCountDays').value = '';
-    
-    const container = document.getElementById('exactTimesContainer');
-    const entries = container.querySelectorAll('.exact-time-entry');
-    entries.forEach((entry, index) => {
-        if (index > 0) {
-            entry.remove();
-        } else {
-            entry.querySelector('.habitExactTime').value = '';
-            entry.querySelector('.habitExactWeekDay').selectedIndex = 0;
-            entry.querySelector('.habitExactDate').value = '';
-        }
-    });
-    
-    document.querySelectorAll('#field-habit input[type="checkbox"]').forEach(checkbox => {
-        checkbox.checked = false;
-    });
-    
-    document.querySelector('#field-once input[type="time"]').value = '';
-    document.querySelector('#field-once input[type="date"]').value = '';
-    document.querySelector('#field-once input[placeholder="deadline"]').value = '';
-}
-
-async function addTask() {
-    const formData = collectFormData();
-    
-    if (!validateFormData(formData)) {
-        return;
-    }
-    
-    tasks.push(formData);
-    saveTasks();
-    displayTasks();
-    clearForm();
-    
-    const aiResult = await sendTasksToServer();
-    if (aiResult) {
-        console.log('AI успешно распределил задачи');
-    }
-}
-
-function saveTasks() {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-}
-
-function displayTasks() {
-    const list = document.getElementById('taskList');
-    list.innerHTML = '';
-    
-    tasks.forEach((task, index) => {
-        const li = document.createElement('li');
-        li.className = 'task-item';
-        
-        let taskInfo = '';
-        if (task.type === 'habit') {
-            taskInfo = `🤮 ${task.name} | ${task.timesPer} раз в ${task.period} | ${task.duration} мин | приоритет ${task.priority}`;
-            if (task.exactTimes.length > 0) {
-                taskInfo += ` | ${task.exactTimes.length} фикс. времени`;
-            }
-        } else {
-            const timeInfo = task.exactTime ? `${task.exactDate} в ${task.exactTime}` : 'без точного времени';
-            taskInfo = `💩 ${task.name} | ${timeInfo} | ${task.duration} мин | приоритет ${task.priority}`;
-        }
-        
-        li.textContent = taskInfo;
-        
-        const deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'Delete';
-        deleteBtn.onclick = () => deleteTask(index);
-        li.appendChild(deleteBtn);
-        
-        list.appendChild(li);
-    });
-}
-
-function deleteTask(index) {
-    if (confirm('delete this taks?')) {
-        tasks.splice(index, 1);
-        saveTasks();
-        displayTasks();
-        sendTasksToServer();
-    }
-}
-
-
-window.addExactTime = addExactTime;
-window.removeExactTime = removeExactTime;
-window.addTask = addTask;
-<<<<<<< HEAD
-window.deleteTask = deleteTask;
-=======
-window.deleteTask = deleteTask;
->>>>>>> 60280d4b2b9562183a4d46424d7dae5c97790c7e

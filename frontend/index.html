@@ -1,190 +1,114 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>AI Планер-Менеджер</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miraculous AI Planner</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Юля и Ева AI Планер</h1>
-  
-  <input class='form' type="text" id="taskName" placeholder="Название задачи">
-  
-  <div class="form">
-    <input type="number" id="taskPriority" placeholder="task priority" step="1">
-    <input type="number" id="taskDuration" placeholder="Длительность (минут)" min="1" step="1">
-  </div>
-  
-  <p>
-    <input type="radio" value="habit" checked name="type"> habit
-    <input type="radio" value="once" name="type"> once
-  </p>
+    <h1>Юля и Ева AI Планнер</h1>
+    <img id="cover_image" src="images/orrange1.jpg" alt="cover image">
+    <div id="all">
+        <div id="new_task_field">
+            <h1 style="color: rgb(230, 80, 25);">new task</h1>
+            <input type="text" id="taskName" placeholder=" title" style="width: 20vw;">
 
-  <div id="field-habit">
-    <p>
-      <input type="number" id="timesPer" placeholder="times per">
-      /
-      <input type="number" id="habitPeriodCountDays" hidden placeholder="количество дней">
-      <select id="period">
-        <option value="week">week</option>
-        <option value="day">day</option>
-        <option value="month">month</option>
-        <option value="year">year</option>
-        <option value="days">days</option>
-      </select>
-      till <input type="date" id="habitEndDate">
-    </p>
+            <select id='task_type' style="width: 20vw; height: 35px; border-radius: 10px;">
+                <option value='General'>General</option>
+                <option value='Work'>Work</option>
+                <option value='Study'>Study</option>
+                <option value='Sport'>Sport</option>
+            </select>
+
+            <input type="number" id="taskDuration" placeholder=" minutes need" style="width: 20vw;">
+
+            <div style="display: flex; align-items: center; ">
+            <button id="type_btn_regular" class="choosed_type_btn" onclick="changeToRegular()">Regular</button>
+            <button id="type_btn_once" class="type_btn" onclick="changeToOnce()">One time todo</button>
+            </div>
+
+            <div id="regular_settings" style="display: none;">
+                <button>  habit days</button>
+                <div id="habit_days_field">
+                    <div style="border: 1px solid rgb(230, 80, 25); border-radius: 10px; padding: 10px; margin-bottom: 5px;">
+                        <p>Special days in week    <button id="choose_special" class="choose" onclick="changeToSpecial()"></button></p>
+                        <div id="special_days_field" style="display: flex;">
+                            <button>M</button>
+                            <button>T</button>
+                            <button>W</button>
+                            <button>T</button>
+                            <button>F</button>
+                            <button>S</button>
+                            <button>S</button>
+                        </div>
+                    </div>
+
+                    <div style="border: 1px solid rgb(230, 80, 25); border-radius: 10px; padding: 10px; margin-bottom: 5px;">
+                        <p>X times per week  <button id="choose_week" class="choose" onclick="changeToPerWeek()"></button> </p>
+                        <p id="per_week_field" style="display: none;"><input type="number" style="width: 5vw;"> times</p>
+                    </div>
+                    <div style="border: 1px solid rgb(230, 80, 25); border-radius: 10px; padding: 10px; margin-bottom: 5px;">
+                        <p>X times per month <button id="choose_month" class="choose" onclick="changeToPerMonth()"></button> </p>
+                        <p id="per_month_field" style="display: none;"><input type="number" style="width: 5vw;"> times</p>
+                    </div>
+                    <div style="border: 1px solid rgb(230, 80, 25); border-radius: 10px; padding: 10px; margin-bottom: 5px;">
+                        <p>X times per year  <button id="choose_year" class="choose" onclick="changeToPerYear()"></button> </p>
+                        <p id="per_year_field" style="display: none;"><input type="number" style="width: 5vw;"> times</p>
+                    </div>
+                </div>
+                <div style="background-color: rgb(230, 80, 25); border-radius: 5px;">until  <input type="date" id="habitEndDate" style="background-color: rgb(230, 80, 25);"></div>
+            </div>
+                
+            <div id="once_settings" style="display: none;">
+                <div style="background-color: rgb(230, 80, 25); border-radius: 5px;">deadline  <input type="date" id="onceDeadline" style="background-color: rgb(230, 80, 25);"></div>
+            </div>
+
+                <div id="day_interval_field" style="display: none;">
+                    <p>do it at</p>
+                    
+                    <button onclick="changeToAnytime()" id="day_interval_anytime" class="choosed_day_interval_btn">Anytime</button>
+                    <button onclick="changeToMorning()" id="day_interval_morning" class="day_interval_btn">Morning</button>
+                    <button onclick="changeToAfternoon()" id="day_interval_afternoon" class="day_interval_btn">Afternoon</button>
+                    <button onclick="changeToEvening()" id="day_interval_evening" class="day_interval_btn">Evening</button>
+                </div>
+
+            <div>
+            <button id="priority_btn_low"  class="priority_btn" onclick="changeToLow()">low</button>
+            <button id="priority_btn_medium" class="choosed_priority_btn" onclick="changeToMedium()">medium</button>
+            <button id="priority_btn_high" class="priority_btn" onclick="changeToHigh()">high</button>
+            </div>
+
+            <button style="background-color: rgb(230, 80, 25); width: 20vw; height: 35px; border-radius: 10px;" onclick="addTask()">+ Create</button>
+
+            <input type="text" placeholder=" comment" style="width: 20vw;">
+        </div>
+        <div>
+            <div id="day_switch_field">
+    <button id="prevWeek" style="background: transparent; border: none; font-size: 32px; cursor: pointer;"> &lt; </button>
     
-    <!-- Контейнер для добавления конкретных времен -->
-    <div id="exactTimesContainer">
-      <div class="exact-time-entry">
-        <input type="time" class="habitExactTime"> 
-        <select class="habitExactWeekDay">
-          <option>Monday</option>
-          <option>Tuesday</option>
-          <option>Wednesday</option>
-          <option>Thursday</option>
-          <option>Friday</option>
-          <option>Saturday</option>
-          <option>Sunday</option>
-        </select>
-        <input type="date" class="habitExactDate" hidden>
-        <button type="button" onclick="removeExactTime(this)">×</button>
-      </div>
+    <div><p style="color: rgb(230, 80, 25)">mon</p><button class="date-btn" data-date=""></button></div>
+    <div><p style="color: rgb(230, 80, 25)">tue</p><button class="date-btn" data-date=""></button></div>
+    <div><p style="color: rgb(230, 80, 25)">wed</p><button class="date-btn" data-date=""></button></div>
+    <div><p style="color: rgb(230, 80, 25)">thu</p><button class="date-btn" data-date=""></button></div>
+    <div><p style="color: rgb(230, 80, 25)">fri</p><button class="date-btn" data-date=""></button></div>
+    <div><p style="color: rgb(230, 80, 25)">sat</p><button class="date-btn" data-date=""></button></div>
+    <div><p style="color: rgb(230, 80, 25)">sun</p><button class="date-btn" data-date=""></button></div>
+    
+    <button id="nextWeek" style="background: transparent; border: none; font-size: 32px; cursor: pointer;"> &gt; </button>
+</div>
+        <div id="tasks_field">
+            
+        </div></div>
+        <div id="additionally_field">
+            <button>Generals</button>
+
+            <p id="current_date">date</p>
+            <p id="current_time">time</p>
+        </div>
     </div>
-    <button type="button" onclick="addExactTime()">+ Добавить время</button>
     
-    <p>
-      <input type="checkbox" value="mon">mon
-      <input type="checkbox" value="tue">tue
-      <input type="checkbox" value="wed">wed
-      <input type="checkbox" value="thu">thu
-      <input type="checkbox" value="fri">fri
-      <input type="checkbox" value="sat">sat
-      <input type="checkbox" value="sun">sun
-    </p>
-  </div>
 
-  <div id="field-once">
-    <p>exact time: <input type="time"> <input type="date"></p>
-    <p>deadline: <input type="date" placeholder="deadline"></p>
-  </div>
-
-  <button onclick="addTask()">Добавить задачу</button>
-
-  <ul id="taskList"></ul>
-
-  <script src="script.js"></script>
-  
-  <script>
-    const radios = document.querySelectorAll('input[name="type"]');
-    const habitBlock = document.getElementById('field-habit');
-    const onceBlock = document.getElementById('field-once');
-  
-    function updateVisibility() {
-      const value = document.querySelector('input[name="type"]:checked').value;
-      habitBlock.hidden = value !== 'habit';
-      onceBlock.hidden = value !== 'once';
-  
-      habitBlock.setAttribute('aria-hidden', (value !== 'habit').toString());
-      onceBlock.setAttribute('aria-hidden', (value !== 'once').toString());
-    }
-  
-    radios.forEach(r => r.addEventListener('change', updateVisibility));
-    updateVisibility();
-
-    const period = document.getElementById('period');
-    const countDays = document.getElementById('habitPeriodCountDays');
-    
-    function updateVisibility2() {
-      const entries = document.querySelectorAll('.exact-time-entry');
-      
-      entries.forEach(entry => {
-        const weekDayField = entry.querySelector('.habitExactWeekDay');
-        const dateField = entry.querySelector('.habitExactDate');
-        
-        if (period.value === 'day' || period.value === 'days'){
-          weekDayField.hidden = true;
-          dateField.hidden = true;
-        }
-        else if (period.value === 'week') {
-          weekDayField.hidden = false;
-          dateField.hidden = true;
-        }
-        else{
-          dateField.hidden = false;
-          weekDayField.hidden = true;
-        }
-      });
-    }
-
-    function updateVisibility3() {
-      if (period.value === 'days') {
-        countDays.hidden = false;
-      }
-      else {
-        countDays.hidden = true;
-      }
-    }
-
-    // Функции для управления конкретными временами
-    function addExactTime() {
-      const timesPer = parseInt(document.getElementById('timesPer').value) || 0;
-      const container = document.getElementById('exactTimesContainer');
-      const currentEntries = container.querySelectorAll('.exact-time-entry').length;
-      
-      if (currentEntries >= timesPer) {
-        alert('Нельзя добавить больше времен, чем указано в timesPer');
-        return;
-      }
-      
-      const newEntry = document.createElement('div');
-      newEntry.className = 'exact-time-entry';
-      newEntry.innerHTML = `
-        <input type="time" class="habitExactTime"> 
-        <select class="habitExactWeekDay">
-          <option>Monday</option>
-          <option>Tuesday</option>
-          <option>Wednesday</option>
-          <option>Thursday</option>
-          <option>Friday</option>
-          <option>Saturday</option>
-          <option>Sunday</option>
-        </select>
-        <input type="date" class="habitExactDate" hidden>
-        <button type="button" onclick="removeExactTime(this)">×</button>
-      `;
-      container.appendChild(newEntry);
-      updateVisibility2(); // Обновляем видимость для нового элемента
-    }
-
-    function removeExactTime(button) {
-      const entries = document.querySelectorAll('.exact-time-entry');
-      if (entries.length > 1) {
-        button.parentElement.remove();
-      }
-    }
-
-    // Добавляем проверку при изменении timesPer
-    document.getElementById('timesPer').addEventListener('input', function() {
-      const timesPer = parseInt(this.value) || 0;
-      const container = document.getElementById('exactTimesContainer');
-      const currentEntries = container.querySelectorAll('.exact-time-entry');
-      
-      // Удаляем лишние entries если timesPer уменьшили
-      if (currentEntries.length > timesPer) {
-        for (let i = currentEntries.length - 1; i >= timesPer; i--) {
-          if (i > 0) { // Оставляем хотя бы один entry
-            currentEntries[i].remove();
-          }
-        }
-      }
-    });
-    
-  </script>
+    <script src="script.js"></script>
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> 60280d4b2b9562183a4d46424d7dae5c97790c7e
